@@ -1,64 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BITS 6th Semester Notes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #f0f0f0;
+            background-image: url('https://www.transparenttextures.com/patterns/diamond-upholstery.png');
         }
+
         header {
-            background-color: #007BFF;
+            background-color: #3498db;
             color: #fff;
-            padding: 10px 0;
+            padding: 20px 0;
             text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         h1 {
             margin: 0;
+            font-size: 2.5em;
         }
+
         main {
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
+
+        .search-bar {
+            margin-bottom: 20px;
+            display: flex;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px 0 0 5px;
+            outline: none;
+        }
+
+        .search-bar button {
+            padding: 10px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .search-bar button:hover {
+            background-color: #2980b9;
+        }
+
         ul {
             list-style-type: none;
             padding: 0;
+            width: 100%;
+            max-width: 600px;
         }
+
         li {
             background: #fff;
             margin: 10px 0;
-            padding: 10px;
+            padding: 15px;
             border: 1px solid #ddd;
             border-radius: 5px;
-            transition: background 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            align-items: center;
         }
+
         li:hover {
-            background: #f0f0f0;
+            transform: translateY(-5px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
         }
+
         a {
             text-decoration: none;
-            color: #007BFF;
+            color: #3498db;
+            font-weight: 700;
+            flex: 1;
         }
+
         a:hover {
             text-decoration: underline;
         }
+
+        .icon {
+            margin-right: 10px;
+            color: #3498db;
+        }
+
+        .date-time {
+            font-size: 0.9em;
+            color:#888;
+        }
+
     </style>
+    <script>
+        function searchNotes() {
+            let input, filter, ul, li, a, i, txtValue;
+            input = document.getElementById('searchInput');
+            filter = input.value.toUpperCase();
+            ul = document.getElementById("notesList");
+            li = ul.getElementsByTagName('li');
+            for (i = 0; i < li.length; i++) {
+                a = li[i].getElementsByTagName("a")[0];
+                txtValue = a.textContent || a.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    li[i].style.display = "";
+                } else {
+                    li[i].style.display = "none";
+                }
+            }
+        }
+    </script>
 </head>
+
 <body>
     <header>
         <h1>BITS 6th Semester Notes</h1>
     </header>
     <main>
-        <ul>
-            <!-- Add your PDF notes here -->
-            <li><a href="Assets\Software Testing Notes.pdf" target="_blank">Software Testing Methodology</a></li>
-            <li><a href="Pages\Software Product Management.html" target="_blank">Software Product Management</a></li>
-            <li><a href="Pages\Artificial Intelligence.html" target="_blank">Artificial Intelligence</a></li>
-            <li><a href="Pages\Middleware Technology.html" target="_blank">Middleware Technology</a></li>
+        <div class="search-bar">
+            <input type="text" id="searchInput" onkeyup="searchNotes()" placeholder="Search for notes...">
+            <button onclick="searchNotes()">Search</button>
+        </div>
+        <ul id="notesList">
+            <li><a href="Pages\Software Product Management.html"><i class="fas fa-file-alt icon"></i>Software Product
+                    Management</a><span class="date-time">18-01-2025 9:00 AM</li>
+            <li><a href="Assets\Software Testing Notes.pdf"><i class="fas fa-file-alt icon"></i>Software Testing
+                    Methodology</a><span class="date-time">18-01-2025 1:00 AM</li>
+            <li><a href="Pages\Artificial Intelligence.html"><i class="fas fa-file-alt icon"></i>Artificial
+                    Intelligence</a><span class="date-time">19-01-2025 9:00 AM</li>
+            <li><a href="Pages\Middleware Technology.html"><i class="fas fa-file-alt icon"></i>Middleware Technology
+                    </a><span class="date-time">19-01-2025 1:00 AM</li>
         </ul>
     </main>
 </body>
+
 </html>
