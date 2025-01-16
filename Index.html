@@ -59,7 +59,7 @@
             border: 1px solid #ddd;
             border-radius: 5px;
             width: 100%;
-            max-width: 250px;
+            max-width: 350px; /* Updated width */
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
             margin-top: 20px;
             box-sizing: border-box;
@@ -116,7 +116,6 @@
             outline: none;
             box-sizing: border-box;
         }
-
 
         .search-bar button:hover {
             background-color: #2980b9;
@@ -201,6 +200,9 @@
                 width: 100%;
                 max-width: none;
                 margin-top: 20px;
+                box-sizing: border-box;
+                padding-left: 15px;
+                padding-right: 15px;
             }
         }
     </style>
@@ -221,6 +223,21 @@
                 }
             }
         }
+
+        function updateVisitCount() {
+            const visitCountElement = document.getElementById('visitCount');
+            let visitCount = localStorage.getItem('visitCount');
+            if (!visitCount) {
+                visitCount = 0;
+            }
+            visitCount++;
+            localStorage.setItem('visitCount', visitCount);
+            visitCountElement.textContent = `Page Visits: ${visitCount}`;
+        }
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            updateVisitCount();
+        });
     </script>
 </head>
 
@@ -228,6 +245,7 @@
     <header>
         <h1>BITS 6th Semester Notes</h1>
     </header>
+    <p id="visitCount" style="text-align: center; font-size: 1.2em; color: #888;"></p>
     <main>
         <div class="content">
             <div class="search-bar">
