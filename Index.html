@@ -14,6 +14,9 @@
             padding: 0;
             background-color: #f0f0f0;
             background-image: url('https://www.transparenttextures.com/patterns/diamond-upholstery.png');
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         header {
@@ -22,6 +25,7 @@
             padding: 20px 0;
             text-align: center;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
         }
 
         h1 {
@@ -32,8 +36,50 @@
         main {
             padding: 20px;
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 90%;
+            max-width: 1200px;
+            flex-wrap: wrap;
+        }
+
+        .content {
+            flex: 1;
+            padding-right: 20px;
+        }
+
+        .contributor-section {
+            background: #ffffff;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 100%;
+            max-width: 250px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .contributor-section h2 {
+            font-size: 1.5em;
+            margin-top: 0;
+            color: #3498db;
+        }
+
+        .contributor-section ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .contributor-section ul li {
+            padding: 5px 0;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .contributor-section ul li:last-child {
+            border-bottom: none;
         }
 
         .search-bar {
@@ -113,40 +159,25 @@
             color: #888;
         }
 
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
-        }
+        @media (max-width: 768px) {
+            main {
+                flex-direction: column;
+                align-items: center;
+            }
 
-        .modal-content {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            width: 80%;
-            max-width: 500px;
-            text-align: center;
-        }
+            .content {
+                padding-right: 0;
+            }
 
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
+            .tiles {
+                grid-template-columns: 1fr;
+            }
 
-        .close:hover, .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
+            .contributor-section {
+                width: 100%;
+                max-width: none;
+                margin-top: 20px;
+            }
         }
     </style>
     <script>
@@ -166,18 +197,6 @@
                 }
             }
         }
-
-        function openModal(content) {
-            const modal = document.getElementById('myModal');
-            const modalContent = document.getElementById('modalContent');
-            modalContent.innerHTML = content;
-            modal.style.display = "flex";
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('myModal');
-            modal.style.display = "none";
-        }
     </script>
 </head>
 
@@ -186,40 +205,64 @@
         <h1>BITS 6th Semester Notes</h1>
     </header>
     <main>
-        <div class="search-bar">
-            <input type="text" id="searchInput" onkeyup="searchNotes()" placeholder="Search for notes...">
-            <button onclick="searchNotes()">Search</button>
+        <div class="content">
+            <div class="search-bar">
+                <input type="text" id="searchInput" onkeyup="searchNotes()" placeholder="Search for notes...">
+                <button onclick="searchNotes()">Search</button>
+            </div>
+            <div class="tiles" id="notesTiles">
+                <div class="tile">
+                    <i class="fas fa-project-diagram icon" style="color: #e74c3c;"></i>
+                    <a href="Pages\Software Product Management.html">Software Product Management</a>
+                    <span class="date-time">18-01-2025 9:00 AM</span>
+                </div>
+                <div class="tile">
+                    <i class="fas fa-vial icon" style="color: #8e44ad;"></i>
+                    <a href="Assets\Software Testing Notes.pdf">Software Testing Methodology</a>
+                    <span class="date-time">18-01-2025 1:00 AM</span>
+                </div>
+                <div class="tile">
+                    <i class="fas fa-brain icon" style="color: #2ecc71;"></i>
+                    <a href="Pages\Artificial Intelligence.html">Artificial Intelligence</a>
+                    <span class="date-time">19-01-2025 9:00 AM</span>
+                </div>
+                <div class="tile">
+                    <i class="fas fa-network-wired icon" style="color: #f39c12;"></i>
+                    <a href="Pages\Middleware Technology.html">Middleware Technology</a>
+                    <span class="date-time">19-01-2025 1:00 AM</span>
+                </div>
+            </div>
         </div>
-        <div class="tiles" id="notesTiles">
-            <div class="tile" onclick="openModal('More details about Software Product Management...')">
-                <i class="fas fa-project-diagram icon" style="color: #e74c3c;"></i>
-                <a href="Pages\Software Product Management.html">Software Product Management</a>
-                <span class="date-time">18-01-2025 9:00 AM</span>
-            </div>
-            <div class="tile" onclick="openModal('More details about Software Testing Methodology...')">
-                <i class="fas fa-vial icon" style="color: #8e44ad;"></i>
-                <a href="Assets\Software Testing Notes.pdf">Software Testing Methodology</a>
-                <span class="date-time">18-01-2025 1:00 AM</span>
-            </div>
-            <div class="tile" onclick="openModal('More details about Artificial Intelligence...')">
-                <i class="fas fa-brain icon" style="color: #2ecc71;"></i>
-                <a href="Pages\Artificial Intelligence.html">Artificial Intelligence</a>
-                <span class="date-time">19-01-2025 9:00 AM</span>
-            </div>
-            <div class="tile" onclick="openModal('More details about Middleware Technology...')">
-                <i class="fas fa-network-wired icon" style="color: #f39c12;"></i>
-                <a href="Pages\Middleware Technology.html">Middleware Technology</a>
-                <span class="date-time">19-01-2025 1:00 AM</span>
-            </div>
+        <div class="contributor-section">
+            <h2>Contributors</h2>
+            <ul>
+                <li>
+                    <span>Rituparna Das</span>
+                    <span>STM - Week 5 & 6</span>
+                </li>
+                <li>
+                    <span>Illyas Ahmed Murumkar</span>
+                    <span>SPM - Week 1 & 2</span>
+                </li>
+                <li>
+                    <span>Sumit</span>
+                    <span>AI - Week 1 & 2</span>
+                </li>
+                <li>
+                    <span>Atul</span>
+                    <span>AI - Week 3 & 4</span>
+                </li>
+                <li>
+                    <span>Tejas Agrawal</span>
+                    <span>SPM - Week 7 & 8</span>
+                </li>
+                <li>
+                    <span>Razak Mohammad</span>
+                    <span>AI - Week 5</span>
+                </li>
+            </ul>
         </div>
     </main>
-
-    <div id="myModal" class="modal">
-        <div class="modal-content" id="modalContent">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <p>Some text in the Modal..</p>
-        </div>
-    </div>
 </body>
 
 </html>
