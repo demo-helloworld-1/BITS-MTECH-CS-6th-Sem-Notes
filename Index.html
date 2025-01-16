@@ -65,25 +65,28 @@
             background-color: #2980b9;
         }
 
-        ul {
-            list-style-type: none;
-            padding: 0;
+        .tiles {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
             width: 100%;
             max-width: 600px;
         }
 
-        li {
-            background: #fff;
-            margin: 10px 0;
-            padding: 15px;
+        .tile {
+            background: #ffffff;
+            padding: 20px;
             border: 1px solid #ddd;
             border-radius: 5px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             display: flex;
+            flex-direction: column;
             align-items: center;
+            text-align: center;
+            cursor: pointer;
         }
 
-        li:hover {
+        .tile:hover {
             transform: translateY(-5px);
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
         }
@@ -92,40 +95,88 @@
             text-decoration: none;
             color: #3498db;
             font-weight: 700;
-            flex: 1;
+            display: block;
+            margin-top: 10px;
         }
 
         a:hover {
-            text-decoration: underline;
+            color: #2980b9;
         }
 
         .icon {
-            margin-right: 10px;
-            color: #3498db;
+            margin-bottom: 10px;
+            font-size: 2em;
         }
 
         .date-time {
             font-size: 0.9em;
-            color:#888;
+            color: #888;
         }
 
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            width: 80%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover, .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
     </style>
     <script>
         function searchNotes() {
-            let input, filter, ul, li, a, i, txtValue;
+            let input, filter, tiles, tile, a, i, txtValue;
             input = document.getElementById('searchInput');
             filter = input.value.toUpperCase();
-            ul = document.getElementById("notesList");
-            li = ul.getElementsByTagName('li');
-            for (i = 0; i < li.length; i++) {
-                a = li[i].getElementsByTagName("a")[0];
+            tiles = document.getElementById("notesTiles");
+            tile = tiles.getElementsByClassName('tile');
+            for (i = 0; i < tile.length; i++) {
+                a = tile[i].getElementsByTagName("a")[0];
                 txtValue = a.textContent || a.innerText;
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    li[i].style.display = "";
+                    tile[i].style.display = "";
                 } else {
-                    li[i].style.display = "none";
+                    tile[i].style.display = "none";
                 }
             }
+        }
+
+        function openModal(content) {
+            const modal = document.getElementById('myModal');
+            const modalContent = document.getElementById('modalContent');
+            modalContent.innerHTML = content;
+            modal.style.display = "flex";
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('myModal');
+            modal.style.display = "none";
         }
     </script>
 </head>
@@ -139,17 +190,36 @@
             <input type="text" id="searchInput" onkeyup="searchNotes()" placeholder="Search for notes...">
             <button onclick="searchNotes()">Search</button>
         </div>
-        <ul id="notesList">
-            <li><a href="Pages\Software Product Management.html"><i class="fas fa-file-alt icon"></i>Software Product
-                    Management</a><span class="date-time">18-01-2025 9:00 AM</li>
-            <li><a href="Assets\Software Testing Notes.pdf"><i class="fas fa-file-alt icon"></i>Software Testing
-                    Methodology</a><span class="date-time">18-01-2025 1:00 AM</li>
-            <li><a href="Pages\Artificial Intelligence.html"><i class="fas fa-file-alt icon"></i>Artificial
-                    Intelligence</a><span class="date-time">19-01-2025 9:00 AM</li>
-            <li><a href="Pages\Middleware Technology.html"><i class="fas fa-file-alt icon"></i>Middleware Technology
-                    </a><span class="date-time">19-01-2025 1:00 AM</li>
-        </ul>
+        <div class="tiles" id="notesTiles">
+            <div class="tile" onclick="openModal('More details about Software Product Management...')">
+                <i class="fas fa-project-diagram icon" style="color: #e74c3c;"></i>
+                <a href="Pages\Software Product Management.html">Software Product Management</a>
+                <span class="date-time">18-01-2025 9:00 AM</span>
+            </div>
+            <div class="tile" onclick="openModal('More details about Software Testing Methodology...')">
+                <i class="fas fa-vial icon" style="color: #8e44ad;"></i>
+                <a href="Assets\Software Testing Notes.pdf">Software Testing Methodology</a>
+                <span class="date-time">18-01-2025 1:00 AM</span>
+            </div>
+            <div class="tile" onclick="openModal('More details about Artificial Intelligence...')">
+                <i class="fas fa-brain icon" style="color: #2ecc71;"></i>
+                <a href="Pages\Artificial Intelligence.html">Artificial Intelligence</a>
+                <span class="date-time">19-01-2025 9:00 AM</span>
+            </div>
+            <div class="tile" onclick="openModal('More details about Middleware Technology...')">
+                <i class="fas fa-network-wired icon" style="color: #f39c12;"></i>
+                <a href="Pages\Middleware Technology.html">Middleware Technology</a>
+                <span class="date-time">19-01-2025 1:00 AM</span>
+            </div>
+        </div>
     </main>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content" id="modalContent">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <p>Some text in the Modal..</p>
+        </div>
+    </div>
 </body>
 
 </html>
